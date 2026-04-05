@@ -19,11 +19,13 @@ pipeline {
             }
         }
 
-        stage('Login to DockerHub') {
+       stage('Login to DockerHub') {
             steps {
-                sh 'echo dhanyabhat1  | docker login -u dhanyabhat  --password-stdin'
+               withCredentials([usernamePassword(credentialsId: '12f7e2ff-df45-4a38-aeb3-499270731b1b', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                sh 'echo $PASS | docker login -u $USER --password-stdin'
             }
         }
+    }
 
         stage('Push Image') {
             steps {
